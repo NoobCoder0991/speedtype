@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing speed Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Dosis&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@200;300;400;500;600;700;800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+    :root {
+
+        --body-color: #312e2b;
+        --text-color: #bababa;
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        font-family: 'Dosis', sans-serif;
+        font-family: "Mukta", sans-serif;
+        background-color: var(--body-color);
+        color: var(--text-color);
+
+    }
+
+    .main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .typing-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* margin: 2vh 0; */
+
+    }
+
+    .type-space {
+        position: relative;
+        display: flex;
+        width: 80vw;
+        flex-wrap: wrap;
+        font-size: x-large;
+    }
+
+    .footer {
+        display: flex;
+        margin: 10vh 5vw;
+        font-size: x-large;
+    }
+
+    .keyboard-shortcuts {
+        color: grey;
+        margin: 10vh 5vw;
+        font-size: large;
+
+    }
+
+    kbd {
+        border: 1px solid grey;
+        background-color: grey;
+        color: white;
+        border-radius: 4px;
+    }
+
+    .footer div {
+        margin: 0 1vw;
+        color: rgb(99, 96, 96);
+        cursor: pointer;
+
+    }
+
+    .footer div:hover {
+        color: orange;
+    }
+
+    .word-div {
+        display: flex;
+        margin: 0 0.5vw;
+        margin-left: 0.1vw;
+        letter-spacing: 1.5px;
+    }
+
+    .letter {
+        color: rgb(167, 163, 163);
+        color: dimgray;
+
+    }
+
+    .caret {
+        transition: 0.15s;
+        left: 0;
+        top: 0;
+        color: orange;
+        position: absolute;
+
+
+    }
+
+    .blink {
+        animation: blink 1s linear infinite;
+    }
+
+    @keyframes blink {
+        0% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+
+    }
+
+    .correct {
+        color: cadetblue;
+        color: white;
+    }
+
+    .incorrect {
+        color: orangered;
+    }
+
+    .logo {
+        color: orange;
+    }
+
+
+    .tools {
+        display: flex;
+        margin-bottom: 5vh;
+
+    }
+
+    .tool {
+        border-radius: 8px;
+        padding: 1vh 0.5vw;
+
+    }
+
+    .timer {
+        display: flex;
+
+    }
+
+    .time-options {
+
+        margin: 0 1vw;
+        display: flex;
+    }
+
+    .option {
+        margin: 0 0.5vw;
+        cursor: pointer;
+
+    }
+
+    .option:hover {
+        color: white;
+    }
+
+    .active-option {
+        color: orange;
+    }
+
+    .custom-timer-div {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* align-items: center; */
+        width: 30vw;
+        padding: 5vh 2vw;
+
+        background-color: #262421;
+        border: 1px solid grey;
+        border-radius: 8px;
+        z-index: 2;
+
+    }
+
+    .child {
+        margin: 1vh 10%;
+        padding: 1vh 0.3vw;
+
+    }
+
+    .title {
+        color: grey;
+    }
+
+    .subtitle {
+        color: grey;
+        font-size: small;
+    }
+
+    .input {
+        border: 2px solid transparent;
+        transition: border 0.3s;
+        border-radius: 8px;
+        caret-color: orange;
+        outline: none;
+    }
+
+    .input:focus {
+        border: 1px solid orange;
+        box-shadow: 0 0 3px orange;
+
+    }
+
+    .button {
+        /* background-color: white; */
+        border: none;
+        border-radius: 8px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .button:hover {
+        background-color: orange;
+        color: white;
+    }
+
+    .crossButton {
+        display: block;
+        margin-right: 5%;
+        margin-left: auto;
+        font-size: xx-large;
+        cursor: pointer;
+        margin-bottom: 0;
+        font-weight: bold;
+    }
+
+    .custom-timer {
+        display: flex;
+
+    }
+
+    .resultDiv {
+        display: flex;
+        flex-direction: column;
+        display: none;
+
+    }
+
+    .speed {
+        font-size: 3vw;
+
+
+    }
+
+    .accuracy {
+        font-size: 3vw;
+
+    }
+
+    .result {
+        display: flex;
+    }
+
+    .result-title {
+        color: grey;
+        text-align: center;
+    }
+
+    .graph {
+        position: relative;
+    }
+
+    .speed-graph {
+        position: relative;
+        width: 60vw;
+        height: 50vh;
+        border-left: 2px solid grey;
+        border-bottom: 2px solid grey;
+    }
+
+    .result-restart {
+        text-align: center;
+        cursor: pointer;
+        transition: 0.3s;
+        background-color: #333;
+        padding: 0 1%;
+        border-radius: 5px;
+        align-self: flex-start;
+    }
+
+    .result-restart:hover {
+        background-color: #222;
+
+    }
+
+    .point {
+        width: 0.5vw;
+        height: 0.5vw;
+        border-radius: 50%;
+        background-color: orange;
+        position: absolute;
+    }
+
+    .label {
+        position: absolute;
+        color: rgba(128, 128, 128, 0.527);
+
+
+    }
+
+    .stats {
+        margin-right: 2vw;
+        margin-left: 2vw;
+        color: orange;
+    }
+
+    .line {
+        border: 1px solid grey;
+        position: absolute;
+        transform-origin: left;
+
+    }
+
+    .visible {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .coordinate-div {
+        position: absolute;
+        padding: 1vw;
+        border-radius: 8px;
+
+        background-color: whitesmoke;
+        transition: ease-out 0.1s;
+    }
+
+    .last-footer {
+        /* background-color: whitesmoke; */
+        color: grey;
+        font-size: small;
+        margin-left: 1%;
+        margin-right: 1%;
+        padding: 1vh 1vw;
+
+    }
+
+    a {
+        text-decoration: none;
+        color: orange;
+
+    }
+
+    .keyboard {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.7;
+        display: none;
+
+    }
+
+    .row {
+        display: flex;
+
+    }
+
+    .key {
+        /* padding: 2.5vh 1.5vw; */
+        width: 5vw;
+        height: 8vh;
+
+        /* background-color:white; */
+        border: 1px solid rgb(179, 175, 175);
+
+        margin: 1px;
+        /* box-shadow: 0px 0px 5px black; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.3vw;
+        font-weight: 500;
+
+
+
+
+
+    }
+
+    .enter,
+    .caps-lock {
+        width: 10.2vw;
+    }
+
+    .shift {
+        width: 10.2vw;
+    }
+
+    .active-key {
+        background-color: rgb(179, 176, 176);
+        color: white;
+    }
+
+    .caps-warning-on,
+    .caps-warning-off {
+        position: absolute;
+        left: 45%;
+        background-color: orange;
+        opacity: 1;
+        z-index: 1;
+        color: white;
+        height: 10vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 0.5vw;
+        border-radius: 0.5vw;
+        display: none;
+
+    }
+
+    .caps-warning-off {
+        color: dodgerblue;
+    }
+
+    .y-label {
+        transform: rotate(270deg);
+        /* background-color: red; */
+        position: absolute;
+        left: -9%;
+        top: 35%;
+        color: gray;
+    }
+
+    .x-label {
+        position: absolute;
+        left: 80%;
+        top: 107%;
+        color: gray;
+    }
+</style>
+
+<body>
+
+    <div class="logo">
+        <h2>
+            <i class="fas fa-bolt"></i>
+            Speedtype
+        </h2>
+    </div>
+    <div class="main">
+        <div class="caps-warning-on">
+            CapsLock ON
+        </div>
+        <div class="caps-warning-off">
+            CapsLock OFF
+        </div>
+        <div class="typing-div">
+
+            <div class="tools">
+                <div class="timer tool">
+                    <div class="fas fa-stopwatch">
+                    </div>
+                    <div class="time-options">
+                        <div class="option active-option active-timer timer-option">15s</div>
+                        <div class="option timer-option">30s</div>
+                        <div class="option timer-option">60s</div>
+                        <div class="option timer-option">120s</div>
+                        <div class="option custom-timer">
+                            <div class="custom-timer-option fas fa-wrench"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="restart tool"><i class="fas fa-redo"></i></div>
+                <div class="tool"><i class="fas fa-keyboard"></i></div>
+
+            </div>
+
+
+            <div class="type-space">
+
+
+            </div>
+        </div>
+        <div class="resultDiv">
+            <div class="result-title">
+                <h2>
+                    <i class="fas fa-chart-line"></i>
+                    Test Result
+                </h2>
+            </div>
+            <div class="result-restart ">Restart Test</div>
+            <div class="result">
+                <div class="stats">
+
+                    <div class="speed">
+                        52 WPM
+                    </div>
+                    <div class="accuracy">
+                        98%
+                    </div>
+                </div>
+                <div class="graph">
+                    <div class="speed-graph">
+                        <div class="y-label">words per minute</div>
+                        <div class="x-label">time</div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="keyboard">
+            <div class="row">
+                <div class="key tab">tab</div>
+                <div class="key">Q</div>
+                <div class="key">W</div>
+                <div class="key">E</div>
+                <div class="key">R</div>
+                <div class="key">T</div>
+                <div class="key">Y</div>
+                <div class="key">U</div>
+                <div class="key">I</div>
+                <div class="key">O</div>
+                <div class="key">P</div>
+                <div class="key open-parenthesis">{</div>
+                <div class="key close-parenthesis">}</div>
+                <div class="key backslash">\</div>
+            </div>
+            <div class="row">
+                <div class="key caps-lock">caps lock</div>
+                <div class="key">A</div>
+                <div class="key">S</div>
+                <div class="key">D </div>
+                <div class="key">F </div>
+                <div class="key">G </div>
+                <div class="key">H </div>
+                <div class="key">J </div>
+                <div class="key">K </div>
+                <div class="key">L</div>
+                <div class="key colon">;</div>
+                <div class="key enter">enter</div>
+
+            </div>
+            <div class="row">
+                <div class="shift key">shift</div>
+                <div class="key">Z</div>
+                <div class="key">X</div>
+                <div class="key">C </div>
+                <div class="key">V </div>
+
+                <div class="key">B </div>
+                <div class="key">N </div>
+                <div class="key">M </div>
+                <div class="key comma">,</div>
+                <div class="key dot">.</div>
+                <div class="key slash">/</div>
+                <div class="key shift">shift</div>
+
+
+            </div>
+        </div>
+        <!-- <div class="keyboard-shortcuts">
+            <div class="shortcut">
+                <kbd>tab</kbd>+<kbd>enter</kbd>=restart test
+            </div>
+            <div class="shortcut">
+                <kbd>shift</kbd>+<kbd>enter</kbd>=terminate test
+
+            </div>
+        </div> -->
+        <div class="footer">
+            <div class="contact fas fa-envelope"></div>
+            <div class="contact fas fa-donate"></div>
+            <div class="contact fas fa-code"></div>
+        </div>
+        <div class="last-footer">
+            Welcome to our <a href="">Typing Speed Test website</a>. As we strive for excellence, we want to let you
+            know that our platform is continuously evolving and improving. Your valuable input is the key to our
+            progress, so we wholeheartedly welcome any constructive criticism you might have.
+            If you have suggestions, ideas, or even want to report a bug, we invite you to share your thoughts with us
+            by filling out our <a href="/feedback">feedback</a> form.
+            <br>
+            &copy; Typetype
+        </div>
+
+    </div>
+</body>
+<script>
+    const words = [
+        "apple", "banana", "chocolate", "elephant", "dolphin", "sunshine", "mountain", "ocean", "butterfly", "wonderful",
+        "happiness", "rainbow", "serendipity", "adventure", "harmony", "laughter", "breeze", "whisper", "paradise", "brilliant",
+        "captivating", "delicious", "effervescent", "fantastic", "graceful", "joyful", "luminous", "magnificent", "peaceful",
+        "quintessential", "resplendent", "splendid", "tranquil", "vibrant", "whimsical", "zestful", "abundance", "celebration",
+        "serenity", "blossom", "laughter", "enchantment", "inspiration", "wonder", "euphoria", "wanderlust", "breathtaking",
+        "bewitching", "charming", "dazzling", "enthralling", "fascinating", "mesmerizing", "radiant", "captivating", "magical",
+        "extraordinary", "delightful", "enchanting", "spectacular", "beauty", "tranquility", "gratitude", "serenity", "heavenly",
+        "blissful", "peace", "paradise", "whisper", "dream", "melody", "affection", "harmony", "giggle", "laughter", "kindness",
+        "wonder", "smile", "sunshine", "delight", "freedom", "grace", "hope", "imagination", "inspiration", "miracle", "novelty",
+        "optimism", "passion", "radiance", "serendipity", "vitality", "adventure", "celebration", "determination", "endurance",
+        "friendship", "happiness", "jubilation", "knowledge", "laughter", "peace", "tranquility", "wisdom", "genuine", "benevolent",
+        "compassion", "divine", "effervescent", "forgiveness", "generosity", "harmony", "integrity", "kindness", "love", "mercy",
+        "nurturing", "patience", "quiet", "reverence", "soul", "thankfulness", "unity", "victory", "wonderful", "zeal", "abundant",
+        "bliss", "contentment", "dream", "fulfillment", "gratitude", "hope", "inspiration", "joy", "kindness", "love", "miracle",
+        "nurture", "optimism", "peace", "quiet", "serenity", "tranquility", "wisdom", "zeal", "benevolence", "compassion", "delight",
+        "enthusiasm", "faith", "grace", "happiness", "integrity", "joyfulness", "kindness", "love", "mercy", "nurturing", "patience",
+        "serenity", "thankfulness", "vitality", "adorable", "beauty", "charming", "dazzling", "elegant", "fascinating", "gorgeous",
+        "handsome", "incredible", "mesmerizing", "outstanding", "remarkable", "stunning", "wonderful", "delightful", "enchanting",
+        "kindness", 'a', 'an', 'the', 'and', 'and', 'and', 'or', 'but', 'for', 'so', 'because', 'although', 'if', 'when', 'while', 'as', 'that', 'because', 'they', 'know', 'is', 'is', 'is', 'where', 'this', 'it', 'with', 'in', 'on', 'of', 'to', 'at', 'by', 'about', 'between', 'through', 'after', 'before', 'above', 'below', 'under', 'over', 'throughout', 'around', 'near', 'since', 'while', 'until', 'even', 'just', 'only', 'also', 'also', 'also', 'never', 'always', 'often', 'sometimes', 'rarely', 'usually', 'well', 'quickly', 'slowly', 'easily', 'hardly', 'quite', 'very', 'more', 'less', 'most', 'least', 'many', 'few', 'some', 'all', 'any', 'none', 'every', 'each', 'other', 'another', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'whom', 'whose', 'these', 'those', 'such', 'several', 'much', 'little', 'next', 'last', 'first', 'second', 'third', 'few', 'many', 'most', 'much', 'each', 'every', 'some', 'none', 'both', 'either', 'neither', 'somebody', 'nobody', 'everyone', 'someone', 'anyone', 'anything', 'nothing', 'something', 'everything', 'are', 'are', 'are',
+        "kindness", 'a', 'an', 'the', 'and', 'and', 'and', 'or', 'but', 'for', 'so', 'because', 'although', 'if', 'when', 'while', 'as', 'that', 'because', 'they', 'know', 'is', 'is', 'is', 'where', 'this', 'it', 'with', 'in', 'on', 'of', 'to', 'at', 'by', 'about', 'between', 'through', 'after', 'before', 'above', 'below', 'under', 'over', 'throughout', 'around', 'near', 'since', 'while', 'until', 'even', 'just', 'only', 'also', 'also', 'also', 'never', 'always', 'often', 'sometimes', 'rarely', 'usually', 'well', 'quickly', 'slowly', 'easily', 'hardly', 'quite', 'very', 'more', 'less', 'most', 'least', 'many', 'few', 'some', 'all', 'any', 'none', 'every', 'each', 'other', 'another', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'whom', 'whose', 'these', 'those', 'such', 'several', 'much', 'little', 'next', 'last', 'first', 'second', 'third', 'few', 'many', 'most', 'much', 'each', 'every', 'some', 'none', 'both', 'either', 'neither', 'somebody', 'nobody', 'everyone', 'someone', 'anyone', 'anything', 'nothing', 'something', 'everything', 'are', 'are', 'are',
+        "fantastic", "joyful", "marvelous", "exquisite", "captivating", "spellbinding", "extraordinary", "breathtaking", "mesmerizing",
+        "incomparable", "spectacular", "wondrous", "awe-inspiring", "majestic", "inspiring", "breathtaking", "inspirational",
+        "fantasy", "adventure", "wanderlust", "imagination", "excitement", "discovery", "curiosity", "exploration", "mystery",
+        "journey", "epiphany", "revelation", "insight", "illumination", "knowledge", "wisdom", "discovery", "inspiration",
+        "kindness", 'a', 'an', 'the', 'and', 'and', 'and', 'or', 'but', 'for', 'so', 'because', 'although', 'if', 'when', 'while', 'as', 'that', 'because', 'they', 'know', 'is', 'is', 'is', 'where', 'this', 'it', 'with', 'in', 'on', 'of', 'to', 'at', 'by', 'about', 'between', 'through', 'after', 'before', 'above', 'below', 'under', 'over', 'throughout', 'around', 'near', 'since', 'while', 'until', 'even', 'just', 'only', 'also', 'also', 'also', 'never', 'always', 'often', 'sometimes', 'rarely', 'usually', 'well', 'quickly', 'slowly', 'easily', 'hardly', 'quite', 'very', 'more', 'less', 'most', 'least', 'many', 'few', 'some', 'all', 'any', 'none', 'every', 'each', 'other', 'another', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'whom', 'whose', 'these', 'those', 'such', 'several', 'much', 'little', 'next', 'last', 'first', 'second', 'third', 'few', 'many', 'most', 'much', 'each', 'every', 'some', 'none', 'both', 'either', 'neither', 'somebody', 'nobody', 'everyone', 'someone', 'anyone', 'anything', 'nothing', 'something', 'everything', 'are', 'are', 'are',
+        "creativity", "invention", "innovation", "imagination", "curiosity", "exploration", "discovery", "adventure", "journey",
+        "epiphany", "wonder", "revelation", "enlightenment", "illumination", "insight", "wisdom", "knowledge", "gratitude", "appreciation",
+        "contentment", "blessing", "thanksgiving", "benevolence", "kindness", "compassion", "forgiveness", "empathy", "generosity",
+        "mercy", "harmony", "peace", "serenity", "joy", "love", "unity", "friendship", "laughter", "happiness", "hope", "inspiration",
+        "kindness", "optimism", "positivity", "success", "achievement", "accomplishment", "fulfillment", "happiness", "satisfaction",
+        "kindness", 'a', 'an', 'the', 'and', 'and', 'and', 'or', 'but', 'for', 'so', 'because', 'although', 'if', 'when', 'while', 'as', 'that', 'because', 'they', 'know', 'is', 'is', 'is', 'where', 'this', 'it', 'with', 'in', 'on', 'of', 'to', 'at', 'by', 'about', 'between', 'through', 'after', 'before', 'above', 'below', 'under', 'over', 'throughout', 'around', 'near', 'since', 'while', 'until', 'even', 'just', 'only', 'also', 'also', 'also', 'never', 'always', 'often', 'sometimes', 'rarely', 'usually', 'well', 'quickly', 'slowly', 'easily', 'hardly', 'quite', 'very', 'more', 'less', 'most', 'least', 'many', 'few', 'some', 'all', 'any', 'none', 'every', 'each', 'other', 'another', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'whom', 'whose', 'these', 'those', 'such', 'several', 'much', 'little', 'next', 'last', 'first', 'second', 'third', 'few', 'many', 'most', 'much', 'each', 'every', 'some', 'none', 'both', 'either', 'neither', 'somebody', 'nobody', 'everyone', 'someone', 'anyone', 'anything', 'nothing', 'something', 'everything', 'are', 'are', 'are',
+        "triumph", "victory", "blessing", "grace", "love", "peace", "serenity", "wisdom", "tranquility", "joy", "kindness", "compassion",
+        "benevolence", "forgiveness", "empathy", "generosity", "mercy", "harmony", "peace", "serenity", "friendship", "laughter",
+        "happiness", "hope", "inspiration", "kindness", "optimism", "positivity", "success", "achievement", "accomplishment",
+        "fulfillment", "happiness", "satisfaction", "triumph", "victory", "blessing", "grace", "love", "peace", "serenity", "wisdom",
+        "tranquility", "joy", "kindness", "compassion", "benevolence", "forgiveness", "empathy", "generosity", "mercy", "harmony",
+        "peace", "serenity", "friendship", "laughter", "happiness", "hope", "inspiration", "kindness", "optimism", "positivity",
+        "kindness", 'a', 'an', 'the', 'and', 'and', 'and', 'or', 'but', 'for', 'so', 'because', 'although', 'if', 'when', 'while', 'as', 'that', 'because', 'they', 'know', 'is', 'is', 'is', 'where', 'this', 'it', 'with', 'in', 'on', 'of', 'to', 'at', 'by', 'about', 'between', 'through', 'after', 'before', 'above', 'below', 'under', 'over', 'throughout', 'around', 'near', 'since', 'while', 'until', 'even', 'just', 'only', 'also', 'also', 'also', 'never', 'always', 'often', 'sometimes', 'rarely', 'usually', 'well', 'quickly', 'slowly', 'easily', 'hardly', 'quite', 'very', 'more', 'less', 'most', 'least', 'many', 'few', 'some', 'all', 'any', 'none', 'every', 'each', 'other', 'another', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'whom', 'whose', 'these', 'those', 'such', 'several', 'much', 'little', 'next', 'last', 'first', 'second', 'third', 'few', 'many', 'most', 'much', 'each', 'every', 'some', 'none', 'both', 'either', 'neither', 'somebody', 'nobody', 'everyone', 'someone', 'anyone', 'anything', 'nothing', 'something', 'everything', 'are', 'are', 'are',
+        "success", "achievement", "accomplishment", "fulfillment", "happiness", "satisfaction", "triumph", "victory", "blessing",
+        "grace", "love", "peace", "serenity", "wisdom", "tranquility", "joy", "kindness", "compassion", "benevolence", "forgiveness",
+        "empathy", "generosity", "mercy", "harmony", "peace", "serenity", "friendship", "laughter", "happiness", "hope", "inspiration",
+        "kindness", 'a', 'an', 'the', 'and', 'and', 'and', 'or', 'but', 'for', 'so', 'because', 'although', 'if', 'when', 'while', 'as', 'that', 'because', 'they', 'know', 'is', 'is', 'is', 'where', 'this', 'it', 'with', 'in', 'on', 'of', 'to', 'at', 'by', 'about', 'between', 'through', 'after', 'before', 'above', 'below', 'under', 'over', 'throughout', 'around', 'near', 'since', 'while', 'until', 'even', 'just', 'only', 'also', 'also', 'also', 'never', 'always', 'often', 'sometimes', 'rarely', 'usually', 'well', 'quickly', 'slowly', 'easily', 'hardly', 'quite', 'very', 'more', 'less', 'most', 'least', 'many', 'few', 'some', 'all', 'any', 'none', 'every', 'each', 'other', 'another', 'my', 'your', 'his', 'her', 'its', 'our', 'their', 'whom', 'whose', 'these', 'those', 'such', 'several', 'much', 'little', 'next', 'last', 'first', 'second', 'third', 'few', 'many', 'most', 'much', 'each', 'every', 'some', 'none', 'both', 'either', 'neither', 'somebody', 'nobody', 'everyone', 'someone', 'anyone', 'anything', 'nothing', 'something', 'everything', 'are', 'are', 'are',
+        "hello", "my", "name", "is", "Khan", "i", "love", "to", "read", "books", "and", "learn", "new", "things", "i", "believe", "that", "knowledge", "is", "power", "and", "that", "you", "can", "achieve", "anything", "if", "you", "put", "your", "mind", "to", "it", "i", "enjoy", "spending", "time", "in", "nature", "and", "appreciating", "the", "beauty", "of", "the", "world", "around", "us", "i", "also", "like", "listening", "to", "music", "and", "playing", "musical", "instruments", "such", "as", "the", "guitar", "and", "piano", "music", "is", "a", "universal", "language", "that", "brings", "people", "together", "and", "evokes", "emotions", "i", "enjoy", "traveling", "and", "exploring", "different", "cultures", "and", "tasting", "new", "cuisines", "from", "around", "the", "world", "meeting", "new", "people", "and", "making", "friends", "along", "the", "way", "is", "a", "rewarding", "experience", "i", "believe", "in", "the", "importance", "of", "kindness", "and", "compassion", "and", "strive", "to", "treat", "others", "with", "respect", "and", "empathy", "in", "today's", "fast-paced", "world", "it's", "essential", "to", "take", "moments", "to", "pause", "and", "reflect", "on", "our", "lives", "and", "our", "priorities", "i", "value", "the", "time", "i", "spend", "with", "family", "and", "friends", "and", "cherish", "the", "memories", "we", "create", "together", "life", "is", "a", "journey", "with", "ups", "and", "downs", "and", "i", "believe", "that", "each", "experience", "teaches", "us", "something", "new", "and", "helps", "us", "grow", "as", "individuals", "i", "look", "forward", "to", "the", "adventures", "that", "lie", "ahead", "and", "the", "opportunities", "to", "make", "a", "positive", "impact", "on", "the", "world", "around", "me", "i", "hope", "to", "inspire", "others", "to", "follow", "their", "passions", "and", "to", "live", "life", "to", "the", "fullest", "so", "remember", "that", "you", "are", "capable", "of", "achieving", "great", "things", "and", "that", "each", "day", "is", "a", "new", "opportunity", "to", "create", "your", "own", "story", "and", "define", "your", "own", "destiny", "with", "perseverance", "and", "dedication", "you", "can", "turn", "your", "dreams", "into", "reality", "and", "make", "a", "difference", "in", "the", "world", "let", "your", "journey", "begin", "today", "and", "embrace", "the", "wonders", "of", "life", "with", "open", "arms", "and", "an", "unwavering", "spirit"
+
+    ];
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i] + ' '
+    }
+
+
+    // You can continue adding or removing words as needed.
+    var testStarted = false;
+    var correctCount = 0
+    var incorrectCount = 0
+    var initialTime = 30;
+    let speeds = []
+    var rawSpeeds = []
+    var capsLockOn = false
+
+
+    //method
+
+    setTypingWords()
+
+    //
+    document.getElementsByClassName('restart')[0].addEventListener('click', e => {
+        resetTest()
+    })
+
+    //setting the timeroptop
+    let timerOptions = document.getElementsByClassName('timer-option')
+    for (let i = 0; i < timerOptions.length; i++) {
+        timerOptions[i].addEventListener('click', e => {
+            makeTimerOption(timerOptions[i])
+
+        })
+    }
+    //setting custom timer
+    document.getElementsByClassName('custom-timer-option')[0].addEventListener('click', e => {
+        let outerDiv = document.createElement('div')
+        outerDiv.classList.add('custom-timer-div')
+        let crossButton = document.createElement('div')
+        crossButton.classList.add('crossButton')
+        crossButton.innerHTML = '&times;'
+        let title = document.createElement('div')
+        title.classList.add('title')
+        title.classList.add('child')
+        title.innerHTML = '<h2>Test duration</h2>'
+        let subtitle = document.createElement('div')
+        subtitle.classList.add('subtitle')
+        subtitle.classList.add('child')
+        subtitle.innerHTML = 'Enter the test duration in seconds.Enter 0 to type without any time constraint(Infinite Test).'
+        let input = document.createElement('input')
+        input.classList.add('input')
+        input.classList.add('child')
+        input.value = 60
+        let button = document.createElement('button')
+        button.classList.add('button')
+        button.classList.add('child')
+        button.innerHTML = 'OK'
+        outerDiv.appendChild(crossButton)
+        outerDiv.appendChild(title)
+        outerDiv.appendChild(subtitle)
+        outerDiv.appendChild(input)
+        outerDiv.appendChild(button)
+
+        document.getElementsByClassName('custom-timer')[0].insertAdjacentElement('afterend', outerDiv)
+        //event listeer to crossbutton
+        crossButton.addEventListener('click', e => {
+            outerDiv.remove()
+        })
+        //event listener to the ok button
+        button.addEventListener('click', e => {
+            let time = input.value
+            if (time != '') {
+                //remove all active options
+                document.getElementsByClassName('active-timer')[0].innerHTML = initialTime + 's'
+                document.getElementsByClassName('active-timer')[0].classList.remove('active-option')
+                document.getElementsByClassName('active-timer')[0].classList.remove('active-timer')
+                let option = document.createElement('div')
+                option.innerHTML = time + 's'
+                option.classList.add('option')
+                option.classList.add('timer-option')
+                option.classList.add('active-timer')
+                option.classList.add('active-option')
+                document.getElementsByClassName('custom-timer')[0].appendChild(option)
+                initialTime = parseInt(time)
+                resetTest()
+                option.addEventListener('click', e => {
+                    makeTimerOption(option)
+                })
+                outerDiv.remove()
+
+
+            }
+        })
+    })
+
+
+    //typing in the 
+    let typeSpace = document.getElementsByClassName('type-space')[0]
+    document.getElementsByClassName('type-space')[0].addEventListener('click', e => {
+        typeSpace.focus()
+    })
+    document.addEventListener('keydown', e => {
+        document.getElementsByClassName('caret')[0].classList.remove('blink')
+        setTimeout(() => {
+            document.getElementsByClassName('caret')[0].classList.add('blink')
+        }, 500);
+        if (e.key == ' ') {
+            event.preventDefault();
+            spacePress();
+            setVirtualCaret();
+            return;
+        }
+        //give warnign if caps lock is pressed
+
+        if (e.key == 'CapsLock') {
+            if (!capsLockOn) {
+                let caps = document.getElementsByClassName("caps-warning-on")[0]
+                caps.style.display = 'flex'
+                capsLockOn = true
+            }
+            else {
+                let caps = document.getElementsByClassName("caps-warning-off")[0]
+                caps.style.display = 'flex'
+                document.getElementsByClassName("caps-warning-on")[0].style.display = 'none'
+                caps.style.backgroundColor = 'lightblue'
+                setTimeout(() => {
+
+                    caps.style.display = 'none'
+                }, 600);
+                capsLockOn = false
+
+
+            }
+        }
+
+        typeSpace.focus()
+        virtualKeyboard(e)
+        if (e.target.contains(typeSpace)) {
+            if (e.key == 'Backspace') {
+                let letters = document.getElementsByClassName('letter')
+                let active = document.getElementsByClassName('active')[0]
+                let index = -1
+                for (let i = 0; i < letters.length; i++) {
+                    if (letters[i].classList.contains('active')) {
+                        index = i
+                        break
+                    }
+                }
+                if (index > 0) {
+
+                    active.classList.remove('active')
+                    letters[index - 1].classList.remove('correct')
+                    letters[index - 1].classList.remove('incorrect')
+                    letters[index - 1].classList.add('active')
+                    setVirtualCaret()
+                }
+            }
+
+            else if (e.key.length == 1) {
+                if (testStarted == false) {
+
+                    testStarted = true;
+                    initialTime = parseInt(document.getElementsByClassName('active-timer')[0].textContent)
+                    countDown()
+                }
+
+
+                let letters = document.getElementsByClassName('letter')
+                let active = document.getElementsByClassName('active')[0]
+                let index = -1
+                for (let i = 0; i < letters.length; i++) {
+                    if (letters[i].classList.contains('active')) {
+                        index = i
+                        break
+                    }
+                }
+                active.classList.remove('active')
+                if (index == letters.length - 1) {
+                    document.getElementsByClassName('type-space')[0].innerHTML = ""
+                    setTypingWords()
+                    setVirtualCaret()
+                }
+                else {
+
+                    letters[index + 1].classList.add('active')
+
+                    setVirtualCaret()
+                    // letters[index + 1].insertAdjacentElement('beforebegin', document.getElementsByClassName('caret')[0])
+                    if (e.key == letters[index].textContent) {
+
+                        letters[index].classList.add('correct')
+                        correctCount++;
+                    }
+                    else {
+
+
+                        letters[index].classList.add('incorrect')
+                        incorrectCount++;
+                    }
+                }
+
+            }
+
+        }
+
+    })
+    //virtual keyboard
+    function virtualKeyboard(event) {
+        let key = event.key.toUpperCase()
+
+        // console.log('key',key=='H')
+        let keys = document.getElementsByClassName('key')
+        for (let i = 0; i < keys.length; i++) {
+            keys[i].classList.remove('active-key')
+            // console.log(keys[i].textContent.toUpperCase()=='A')
+
+            if (keys[i].innerText.toUpperCase() == key) {
+                console.log('hello')
+
+                keys[i].classList.add('active-key')
+
+            }
+        }
+    }
+    //Send words to the type space
+    function setTypingWords() {
+        const maxLetterCount = 250;
+        let count = 0;
+        let caret = document.createElement('div');
+        caret.classList.add('caret');
+        caret.classList.add('blink');
+        caret.innerHTML = "|"
+        document.getElementsByClassName('type-space')[0].appendChild(caret)
+        while (count < maxLetterCount) {
+            let rand = Math.floor((words.length - 1) * Math.random())
+            let word = words[rand]
+            let wordDiv = document.createElement('div')
+            wordDiv.classList.add('word-div')
+            for (let j = 0; j < word.length; j++) {
+                let letter = document.createElement('div')
+                letter.classList.add('letter')
+                letter.innerHTML = word[j]
+                wordDiv.appendChild(letter);
+                count++;
+                if (count >= maxLetterCount) {
+                    break;
+                }
+            }
+            document.getElementsByClassName('type-space')[0].appendChild(wordDiv)
+        }
+        document.getElementsByClassName('letter')[0].classList.add('active')
+
+    }
+    function setVirtualCaret() {
+        let activeLetter = document.getElementsByClassName('active')[0]
+        let caret = document.getElementsByClassName('caret')[0]
+        let rect = activeLetter.getBoundingClientRect();
+        let rect0 = document.getElementsByClassName('letter')[0].getBoundingClientRect();
+
+        caret.style.left = rect.left - rect0.left + 'px';
+        caret.style.top = rect.top - rect0.top + 'px';
+
+    }
+
+
+
+    function countDown() {
+
+        if (!testStarted) return;
+        let time = document.getElementsByClassName('active-timer')[0]
+
+        let currentTime = parseInt(time.textContent)
+        //
+
+        //
+        updatedTime = currentTime - 1
+        speeds.push(parseInt((correctCount * 60) / (5 * (initialTime - updatedTime))))
+        rawSpeeds.push(parseInt(((correctCount + incorrectCount) * 60) / (5 * (initialTime - updatedTime))))
+        if (updatedTime >= 0) {
+            time.innerHTML = `${updatedTime}s`
+        }
+        if (updatedTime == 0) {
+            endTest()
+            return;
+        }
+        setTimeout(countDown, 1000)
+
+    }
+
+    function resetTest() {
+        testStarted = false
+        correctCount = 0
+        incorrectCount = 0
+        speeds = []
+        rawSpeeds = []
+        document.getElementsByClassName('type-space')[0].innerHTML = ""
+        document.getElementsByClassName('active-timer')[0].innerHTML = `${initialTime}s`
+        setTypingWords()
+        resetCaret()
+
+
+    }
+
+    function makeTimerOption(element) {
+        document.getElementsByClassName('active-timer')[0].innerHTML = initialTime + 's'
+        document.getElementsByClassName('active-timer')[0].classList.remove('active-option')
+        document.getElementsByClassName('active-timer')[0].classList.remove('active-timer')
+        element.classList.add('active-timer')
+        element.classList.add('active-option')
+        initialTime = parseInt(element.textContent)
+        resetTest()
+    }
+
+    function endTest() {
+        document.getElementsByClassName('typing-div')[0].style.display = 'none'
+        document.getElementsByClassName('footer')[0].style.display = 'none'
+        document.getElementsByClassName('last-footer')[0].style.display = 'none'
+        document.getElementsByClassName('keyboard')[0].style.display = 'none'
+        document.getElementsByClassName('resultDiv')[0].style.display = 'flex'
+        document.getElementsByClassName('resultDiv')[0].style.flexDirection = 'column'
+        let speed = parseInt((correctCount * 60) / (5 * initialTime))
+        let accuracy = parseInt((correctCount / (correctCount + incorrectCount)) * 100)
+        document.getElementsByClassName('speed')[0].innerHTML = '' + speed + '<span style="color:grey">WPM<span>'
+        document.getElementsByClassName('accuracy')[0].innerHTML = accuracy + '<span style="color:grey">%<span>'
+
+        drawGraph(speeds, 'orange')
+        //adding event listener to the restart test button
+        document.getElementsByClassName('result-restart')[0].addEventListener('click', e => {
+            document.getElementsByClassName('resultDiv')[0].style.display = 'none'
+            resetTest()
+            let c = document.getElementsByClassName('coordinate-div')
+            if (c.length) c[0].remove()
+            // document.getElementsByClassName('coordinate-div')[0].remove()
+            document.getElementsByClassName('typing-div')[0].style.display = 'flex'
+            document.getElementsByClassName('footer')[0].style.display = 'flex'
+            document.getElementsByClassName('last-footer')[0].style.display = 'block'
+            let points = document.getElementsByClassName('point')
+            let lines = document.getElementsByClassName('line')
+            let labels = document.getElementsByClassName('label')
+            let len1 = points.length
+            let len2 = lines.length
+            let len3 = labels.length
+            for (let i = 0; i < len1; i++) {
+                points[0].remove()
+            }
+            for (let i = 0; i < len2; i++) {
+                lines[0].remove()
+            }
+            for (let i = 0; i < len3; i++) {
+                labels[0].remove()
+            }
+
+        })
+
+    }
+
+    //functions for drawing graph
+    function maxArr(arr) {
+        let max = arr[0]
+        for (let i = 0; i < arr.length; i++) {
+            max = Math.max(max, arr[i])
+
+        }
+        return max
+    }
+
+    function joinPointsOnGraph(point1, point2, color) {
+
+        const lineDiv = document.createElement('div');
+        lineDiv.classList.add('line')
+        lineDiv.style.border = '1px solid ' + color;
+
+        // Get positions of the circular divs
+        const rect1 = point1.getBoundingClientRect();
+        const rect2 = point2.getBoundingClientRect();
+
+
+        // Calculate the coordinates for the line
+        const x1 = rect1.left + rect1.width / 2;
+        const y1 = rect1.top + rect1.height / 2;
+        const x2 = rect2.left + rect2.width / 2;
+        const y2 = rect2.top + rect2.height / 2;
+
+        // Calculate line length and angle
+        const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+
+        // Set line position, length, and angle
+        lineDiv.style.left = x1 + 'px';
+        lineDiv.style.top = y1 + 'px';
+        lineDiv.style.width = length + 'px';
+        lineDiv.style.transform = `rotate(${angle}rad)`;
+        document.body.append(lineDiv)
+        return lineDiv
+    }
+
+
+
+    function drawGraph(arr, color) {
+        //drawing graph
+        arr.splice(0, 1)
+        let time = arr.length
+        let max = maxArr(speeds)
+        let graph = document.getElementsByClassName('speed-graph')[0]
+        let rect = graph.getBoundingClientRect()
+        let width = rect.width
+        let height = rect.height
+        let left = rect.left
+        let top1 = rect.top
+        let xscale = width / time
+        let yscale = height / max
+
+
+        //labeling the y-axis
+        const maxPontsOnYaxis = 8;
+        const inc = Math.max(1, parseInt(max / maxPontsOnYaxis));
+        for (let i = 0; i <= max; i += inc) {
+
+            let label = document.createElement('div')
+            label.classList.add('label')
+            label.innerHTML = `${i}`
+            label.style.left = `${left + 3}px`
+            label.style.top = `${top1 - i * yscale + height}px`
+            document.body.appendChild(label)
+        }
+
+        //
+        let previousPoint = null
+        const maxPontsOnXaxis = 15;
+        const incx = Math.max(parseInt(time / maxPontsOnXaxis), 1)
+        for (let i = 1; i < time; i += incx) {
+            let label = document.createElement('div')
+            label.classList.add('label')
+            label.innerHTML = `${i}`
+            label.style.left = `${left + i * xscale}px`
+            label.style.top = `${top1 + height}px`
+            document.body.appendChild(label)
+
+            let point = document.createElement('div')
+            point.classList.add('point')
+            point.style.left = `${left + i * xscale}px`
+            point.style.top = `${top1 - arr[i] * yscale + height}px`
+            point.style.backgroundColor = color
+
+
+            document.body.appendChild(point)
+            //join this point to the previous point
+            if (previousPoint) {
+                let joinedLine = joinPointsOnGraph(point, previousPoint, color)
+
+            }
+            previousPoint = point
+
+            //when the user hovers around the point, it should get the corrsoponding speed
+
+
+        }
+
+    }
+
+    function spacePress() {
+        let activeLetter = document.getElementsByClassName('active')[0];
+        let activeWord = activeLetter.parentElement;
+        let wordArr = Array.from(document.getElementsByClassName('word-div'))
+        let index = wordArr.indexOf(activeWord)
+        if (index < wordArr.length) {
+            wordArr[index + 1].firstChild.classList.add('active');
+            activeLetter.classList.remove('active')
+        }
+    }
+
+    function resetCaret() {
+        let caret = document.getElementsByClassName('caret')[0];
+        caret.style.left = '0px';
+        caret.style.top = '0px';
+    }
+
+</script>
+
+</html>
