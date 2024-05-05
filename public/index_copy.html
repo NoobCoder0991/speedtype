@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Typing speed Test</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
@@ -138,6 +140,7 @@
     }
 
     .logo {
+        align-self: flex-start;
         color: orange;
     }
 
@@ -291,8 +294,6 @@
         position: relative;
         width: 60vw;
         height: 50vh;
-        border-left: 2px solid grey;
-        border-bottom: 2px solid grey;
     }
 
     .result-restart {
@@ -520,11 +521,11 @@
                     </div>
                 </div>
                 <div class="graph">
-                    <div class="speed-graph">
-                        <div class="y-label">words per minute</div>
-                        <div class="x-label">time</div>
+                    <canvas class="speed-graph">
+                        <!-- <div class="y-label">words per minute</div>
+                        <div class="x-label">time</div> -->
 
-                    </div>
+                    </canvas>
 
 
                 </div>
@@ -610,6 +611,7 @@
     </div>
 </body>
 <script>
+    var myChart = null;
     const words = [
         "apple", "banana", "chocolate", "elephant", "dolphin", "sunshine", "mountain", "ocean", "butterfly", "wonderful",
         "happiness", "rainbow", "serendipity", "adventure", "harmony", "laughter", "breeze", "whisper", "paradise", "brilliant",
@@ -814,7 +816,6 @@
 
             else if (e.key.length == 1) {
                 if (testStarted == false) {
-
                     testStarted = true;
                     initialTime = parseInt(document.getElementsByClassName('active-timer')[0].textContent)
                     countDown()
@@ -837,19 +838,13 @@
                     setVirtualCaret()
                 }
                 else {
-
                     letters[index + 1].classList.add('active')
-
                     setVirtualCaret()
-                    // letters[index + 1].insertAdjacentElement('beforebegin', document.getElementsByClassName('caret')[0])
                     if (e.key == letters[index].textContent) {
-
                         letters[index].classList.add('correct')
                         correctCount++;
                     }
                     else {
-
-
                         letters[index].classList.add('incorrect')
                         incorrectCount++;
                     }
@@ -980,9 +975,13 @@
         document.getElementsByClassName('accuracy')[0].innerHTML = accuracy + '<span style="color:grey">%<span>'
 
         // drawGraph(rawSpeeds, 'grey')
-        drawGraph(speeds, 'orange')
+        // drawGraph(speeds, 'orange')
+        // drawGraphModern(rawSpeeds, 'grey')
+        drawGraphModern(speeds, rawSpeeds, 'orange', 'grey')
         //adding event listener to the restart test button
         document.getElementsByClassName('result-restart')[0].addEventListener('click', e => {
+            myChart.destroy()
+            myChart = null
             document.getElementsByClassName('resultDiv')[0].style.display = 'none'
             resetTest()
             let c = document.getElementsByClassName('coordinate-div')
@@ -1133,6 +1132,59 @@
         let caret = document.getElementsByClassName('caret')[0];
         caret.style.left = '0px';
         caret.style.top = '0px';
+    }
+
+    function drawGraphModern(speeds, rawSpeeds, color1, color2) {
+        const ctx = document.getElementsByClassName('speed-graph')[0].getContext('2d');
+        speeds.splice(0, 1)
+        rawSpeeds.splice(0, 1)
+        let xvalues = [];
+        for (let i = 0; i < speeds.length; i++) {
+            xvalues.push(i)
+        }
+        // Create a new Chart instance
+        myChart = new Chart(ctx, {
+            type: 'line', // Define the chart type (e.g., 'line' for a line chart)
+            data: {
+                labels: xvalues, // Use the xvalues array for the labels
+                datasets: [{
+                    label: 'WPM', // Label for the dataset
+                    data: speeds, // Use the yvalues array for the data
+                    borderColor: color1, // Color of the line
+                    fill: true, // Do not fill the area under the line
+                    tension: 0.4, // Set the tension for smooth lines (adjust value as needed)
+                    pointBackgroundColor: color1 // Fill color of the points
+
+                },
+                {
+                    label: 'RAW', // Label for the dataset
+                    data: rawSpeeds, // Use the yvalues array for the data
+                    borderColor: color2, // Color of the line
+                    fill: true, // Do not fill the area under the line
+                    tension: 0.4,// Set the tension for smooth lines (adjust value as needed)
+                    pointBackgroundColor: color2
+                }
+
+                ]
+            },
+            options: {
+                responsive: true, // Make the chart responsive
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'time' // Label for the x-axis
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'words per minute' // Label for the y-axis
+                        }
+                    }
+                }
+            }
+        });
     }
 
 </script>

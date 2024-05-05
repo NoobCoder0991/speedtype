@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Multiple Graphs Example</title>
+    <!-- Load the Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <h1>Multiple Graphs Example</h1>
+    <!-- Create a canvas element where the chart will be rendered -->
+    <canvas id="myChart"></canvas>
+
+    <script>
+        // Sample data arrays for two different datasets
+        const xvalues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+        // First dataset
+        const yvalues1 = [10, 12, 8, 15, 20, 22, 25, 30, 35, 40];
+        // Second dataset
+        const yvalues2 = [5, 7, 9, 11, 13, 15, 17, 19, 21, 23];
+
+        // Get the canvas element by its ID
+        const ctx = document.getElementById('myChart').getContext('2d');
+
+        // Create a new Chart instance
+        const myChart = new Chart(ctx, {
+            type: 'line', // Define the chart type (e.g., 'line' for a line chart)
+            data: {
+                labels: xvalues, // Use the xvalues array for the labels
+                datasets: [
+                    {
+                        label: 'Dataset 1', // Label for the first dataset
+                        data: yvalues1, // Use the yvalues1 array for the data
+                        borderColor: 'blue', // Color of the first line
+                        fill: false, // Do not fill the area under the line
+                        tension: 0.4 // Smooth the line
+                    },
+                    {
+                        label: 'Dataset 2', // Label for the second dataset
+                        data: yvalues2, // Use the yvalues2 array for the data
+                        borderColor: 'red', // Color of the second line
+                        fill: false, // Do not fill the area under the line
+                        tension: 0.4 // Smooth the line
+                    }
+                ]
+            },
+            options: {
+                responsive: true, // Make the chart responsive
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'X Values' // Label for the x-axis
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Y Values' // Label for the y-axis
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
